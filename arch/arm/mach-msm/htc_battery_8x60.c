@@ -323,6 +323,17 @@ static void cable_status_notifier_func(enum usb_connect_type online)
 			radio_set_cable_status(CHARGER_AC);
 		} else {
 			BATT_LOG("cable USB");
+		/* If forced fast charge is enabled "always" or if no USB device detected, go AC */
+		if ((force_fast_charge == FAST_CHARGE_FORCE_AC) ||
+		    (force_fast_charge == FAST_CHARGE_FORCE_AC_IF_NO_USB &&
+                     USB_peripheral_detected == USB_ACC_NOT_DETECTED        )) {
+			BATT_LOG("cable USB forced to AC");
+			is_fast_charge_forced = FAST_CHARGE_FORCED;
+			htc_batt_info.rep.charging_source = CHARGER_AC;
+			radio_set_cable_status(CHARGER_AC);
+		} else {
+			BATT_LOG("cable USB not forced to AC");
+			is_fast_charge_forced = FAST_CHARGE_NOT_FORCED;
 			htc_batt_info.rep.charging_source = CHARGER_USB;
 			radio_set_cable_status(CHARGER_USB);
 		}
