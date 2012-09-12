@@ -1342,33 +1342,6 @@ config MSM_DALRPC_TEST
 	help
 	  Exercises DAL RPC calls to QDSP6.
 
-config MSM_MPDEC
-	bool "Enable kernel based mpdecision"
-	depends on MSM_SMP
-	default n
-	help
-	  This enables kernel based multi core control.
-	  (up/down hotplug based on load)
-
-choice
-    prompt "Default MPdecision setting"
-    help
-      This option sets the MPdecision startup settings.
-      If in doubt, select 'enabled'.
-
-config MSM_MPDEC_ENABLED
-    bool "enabled"
-    depends on MSM_MPDEC
-    help
-      Build MPdecision into kernel with full control over 
-      multi processor decisions by default.
-
-config MSM_MPDEC_DISABLED
-    bool "disabled"
-    depends on MSM_MPDEC
-    help
-      Build MPdecision into kernel with only control over 
-      screen on/off multi processor decisions by default.
 
 config MSM_KGSL_GPU_CLOCK
 	bool "Extend GPU clock frequency"
@@ -1402,6 +1375,14 @@ choice
 		bool "Maximum (3d@320 & 2d@266)"
 		help
 		  Maximum GPU overclock
+		
+
+config MSM_MPDEC_ENABLED
+    bool "enabled"
+    depends on MSM_MPDEC
+    help
+      Build MPdecision into kernel with full control over 
+      multi processor decisions by default.
 endchoice
 
 if CPU_FREQ_MSM
