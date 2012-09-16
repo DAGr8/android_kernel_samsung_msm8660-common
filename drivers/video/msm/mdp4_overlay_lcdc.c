@@ -530,7 +530,7 @@ int mdp4_lcdc_on(struct platform_device *pdev)
 	mdp4_overlayproc_cfg(pipe);
 
 	mdp4_overlay_reg_flush(pipe, 1);
-	mdp4_mixer_stage_up(pipe, 0);
+	mdp4_mixer_stage_up(pipe);
 
 
 	/*
@@ -635,8 +635,6 @@ int mdp4_lcdc_off(struct platform_device *pdev)
 	struct msm_fb_data_type *mfd;
 	struct vsycn_ctrl *vctrl;
 	struct mdp4_overlay_pipe *pipe;
-	unsigned long flags;
-	int need_wait = 0;
 
 	mfd = (struct msm_fb_data_type *)platform_get_drvdata(pdev);
 	vctrl = &vsync_ctrl_db[cndx];
@@ -654,6 +652,7 @@ int mdp4_lcdc_off(struct platform_device *pdev)
 		if (need_wait)
 			mdp4_lcdc_wait4ov(0);
 	}
+		msleep(20);	/* >= 17 ms */
 
 	MDP_OUTP(MDP_BASE + LCDC_BASE, 0);
 
@@ -672,7 +671,7 @@ int mdp4_lcdc_off(struct platform_device *pdev)
 			vctrl->base_pipe = NULL;
 		} else {
 			/* system suspending */
-			mdp4_mixer_stage_down(vctrl->base_pipe, 1);
+			mdp4_mixer_stage_down(vctrl->base_pipe);
 			mdp4_overlay_iommu_pipe_free(
 				vctrl->base_pipe->pipe_ndx, 1);
 		}
