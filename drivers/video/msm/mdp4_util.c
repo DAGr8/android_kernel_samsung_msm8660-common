@@ -3159,7 +3159,7 @@ u32 mdp4_allocate_writeback_buf(struct msm_fb_data_type *mfd, u32 mix_num)
 			mfd->mem_hid);
 		if (!IS_ERR_OR_NULL(buf->ihdl)) {
 			if (ion_map_iommu(mfd->iclient, buf->ihdl,
-				DISPLAY_DOMAIN, GEN_POOL, SZ_4K, buffer_size * 2, &addr,
+				DISPLAY_DOMAIN, GEN_POOL, SZ_4K, 0, &addr,
 				&len, 0, 0)) {
 				pr_err("ion_map_iommu() failed\n");
 				return -ENOMEM;
@@ -3785,18 +3785,4 @@ int mdp4_igc_lut_config(struct mdp_igc_lut_data *cfg)
 
 error:
 	return ret;
-}
-
-u32 mdp4_get_mixer_num(u32 panel_type)
-{
-	u32 mixer_num;
-	if ((panel_type == TV_PANEL) ||
-			(panel_type == DTV_PANEL))
-		mixer_num = MDP4_MIXER1;
-	else if (panel_type == WRITEBACK_PANEL) {
-		mixer_num = MDP4_MIXER2;
-	} else {
-		mixer_num = MDP4_MIXER0;
-	}
-	return mixer_num;
 }
