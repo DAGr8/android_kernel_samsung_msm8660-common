@@ -16964,9 +16964,6 @@ static void __init msm8x60_init(struct msm_board_data *board_data)
 	set_three_phase_freq_badass(CONFIG_CPU_FREQ_GOV_BADASS_3_PHASE_FREQ);
 #endif
 
-#ifdef CONFIG_CPU_FREQ_GOV_ONDEMAND_2_PHASE
-	set_two_phase_freq(1242000);
-#endif
 #ifdef CONFIG_CPU_FREQ_GOV_INTELLIDEMAND_2_PHASE
 	id_set_two_phase_freq(1188000);
 #endif
