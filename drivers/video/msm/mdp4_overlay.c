@@ -3583,17 +3583,14 @@ int mdp4_overlay_commit(struct fb_info *info, int mixer)
 			/* cndx = 0 */
 			mdp4_lcdc_pipe_commit(0, 1);
 		}
-<<<<<<< HEAD
 	} else if (mixer == MDP4_MIXER1) {
 		if (ctrl->panel_mode & MDP4_PANEL_DTV)
 			mdp4_dtv_pipe_commit(0, 1);
-=======
 #ifdef CONFIG_FB_MSM_DTV
 	} else if (mixer == MDP4_MIXER1) {
 		if (ctrl->panel_mode & MDP4_PANEL_DTV)
 			mdp4_dtv_pipe_commit(0, 1);
 #endif
->>>>>>> 00e92fa252f9cefde91bd3c5abade19a55d08a5a
 	}
 
 	mdp4_overlay_mdp_perf_upd(mfd, 0);
